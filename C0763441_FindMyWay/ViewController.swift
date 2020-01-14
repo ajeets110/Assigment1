@@ -13,7 +13,8 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
     var locationManager = CLLocationManager()
- 
+    var location = CLLocationCoordinate2D()
+    var coordinate = CLLocationCoordinate2D()
     @IBOutlet weak var navigateButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         
     }
+    
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
                 
@@ -41,7 +43,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                
         // setting span and location
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
-        let location = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        location = CLLocationCoordinate2D(latitude: lat, longitude: long)
                
         // setting region
         let region = MKCoordinateRegion(center: location, span: span)
@@ -57,13 +59,68 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @objc func doubuleTap(gestureRecognizer: UIGestureRecognizer){
         
         let touchPoint = gestureRecognizer.location(in: mapView)
-        let coordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+        coordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         
         let annotation = MKPointAnnotation()
         annotation.title = "Destination"
         annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
+        if mapView.annotations.count == 1 {
+            mapView.addAnnotation(annotation)
+            
+        } else {
+            mapView.removeAnnotation(annotation)
+        }
+        
     }
-
+    
+    
+    @IBAction func navigateBtn(_ sender: Any) {
+        
+        directions()
+        
+    }
+    
+    @objc func directions(){
+        
+        let sourcePlacemark = MKPlacemark(coordinate: location)
+        let destPlacemark = MKPlacemark(coordinate: coordinate)
+        
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = MKMapItem(placemark: sourcePlacemark)
+        directionRequest.destination = MKMapItem(placemark: destPlacemark)
+        directionRequest.transportType = .automobile
+        
+        let direction = MKDirections(request: directionRequest)
+        direction.calculate{ (response, error) in
+            guard let directionResponse = response else {
+                if let error = error {
+                    print("Unable to find navigation")
+                }
+                return
+            }
+            // adding route
+            let route = directionResponse.routes[0]
+            self.mapView.addOverlay(route.polyline, level: .aboveRoads)
+            
+            let rect = route.polyline.boundingMapRect
+            self.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+        }
+        self.mapView.delegate = self
+        }
 }
+        
+        
+  
 
+
+extension ViewController: MKMapViewDelegate
+{
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.fillColor = UIColor.black
+        renderer.strokeColor = UIColor.blue
+        renderer.lineWidth = 3
+        return renderer
+}
+}

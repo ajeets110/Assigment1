@@ -30,6 +30,9 @@
                                 <rect key="frame" x="327" y="778" width="67" height="67"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="locationButton"/>
+                                <connections>
+                                    <action selector="navigateBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5uz-6e-0AD"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
