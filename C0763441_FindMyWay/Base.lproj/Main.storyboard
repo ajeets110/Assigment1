@@ -15,34 +15,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Find My Way" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLg-ik-6ng">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find My Way" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLg-ik-6ng">
                                 <rect key="frame" x="20" y="52.5" width="374" height="31.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" zoomEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-SD-151">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-SD-151">
                                 <rect key="frame" x="0.0" y="92" width="414" height="770"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCR-5g-iyD">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCR-5g-iyD">
                                 <rect key="frame" x="327" y="778" width="67" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="locationButton"/>
                                 <connections>
                                     <action selector="navigateBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5uz-6e-0AD"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jAa-gO-CW7">
-                                <rect key="frame" x="142" y="795" width="97" height="32"/>
-                                <segments>
-                                    <segment title="Walk"/>
-                                    <segment title="Car"/>
-                                </segments>
-                                <connections>
-                                    <action selector="mode:" destination="BYZ-38-t0r" eventType="valueChanged" id="44Z-w3-MZf"/>
-                                </connections>
-                            </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="HmF-71-PRB">
                                 <rect key="frame" x="20" y="787" width="79" height="48"/>
                                 <subviews>
@@ -68,13 +56,38 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jAa-gO-CW7">
+                                <rect key="frame" x="159" y="796" width="97" height="32"/>
+                                <segments>
+                                    <segment title="Walk"/>
+                                    <segment title="Car"/>
+                                </segments>
+                                <connections>
+                                    <action selector="mode:" destination="BYZ-38-t0r" eventType="valueChanged" id="44Z-w3-MZf"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="jAa-gO-CW7" firstAttribute="leading" secondItem="HmF-71-PRB" secondAttribute="trailing" constant="43" id="7hf-ZJ-oes"/>
+                            <constraint firstItem="IOq-SD-151" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="02J-bv-Y5y"/>
+                            <constraint firstItem="IOq-SD-151" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="3B4-3G-Jnj"/>
+                            <constraint firstItem="jAa-gO-CW7" firstAttribute="leading" secondItem="HmF-71-PRB" secondAttribute="trailing" constant="60" id="GoK-uJ-3qT"/>
+                            <constraint firstItem="fCR-5g-iyD" firstAttribute="leading" secondItem="jAa-gO-CW7" secondAttribute="trailing" constant="71" id="Jgs-lo-4rh"/>
+                            <constraint firstItem="jAa-gO-CW7" firstAttribute="top" secondItem="bLg-ik-6ng" secondAttribute="bottom" constant="712" id="Lle-Vh-eDe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="HmF-71-PRB" secondAttribute="bottom" constant="27" id="ORL-UM-Q65"/>
+                            <constraint firstItem="IOq-SD-151" firstAttribute="top" secondItem="bLg-ik-6ng" secondAttribute="bottom" constant="8" id="QQS-Mm-hcj"/>
+                            <constraint firstItem="IOq-SD-151" firstAttribute="top" secondItem="bLg-ik-6ng" secondAttribute="bottom" constant="8" id="VsD-rl-u1A"/>
+                            <constraint firstItem="fCR-5g-iyD" firstAttribute="leading" secondItem="jAa-gO-CW7" secondAttribute="trailing" constant="71" id="W0q-OR-ajG"/>
+                            <constraint firstItem="fCR-5g-iyD" firstAttribute="top" secondItem="bLg-ik-6ng" secondAttribute="bottom" constant="694" id="X3N-Wl-eFs"/>
+                            <constraint firstItem="bLg-ik-6ng" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8.5" id="X7J-ad-S9p"/>
+                            <constraint firstItem="IOq-SD-151" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="bbW-Yn-WeA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fCR-5g-iyD" secondAttribute="trailing" constant="20" id="i60-e8-aVm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="jAa-gO-CW7" secondAttribute="bottom" constant="35" id="iIu-uV-VIQ"/>
+                            <constraint firstItem="bLg-ik-6ng" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="iRY-sU-vRY"/>
                             <constraint firstItem="HmF-71-PRB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="j0b-XK-RZ6"/>
                             <constraint firstItem="HmF-71-PRB" firstAttribute="top" secondItem="bLg-ik-6ng" secondAttribute="bottom" constant="703" id="nNj-Rw-BZz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bLg-ik-6ng" secondAttribute="trailing" constant="20" id="s5g-wv-WW3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fCR-5g-iyD" secondAttribute="bottom" constant="17" id="wC5-DU-FXc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
