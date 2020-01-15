@@ -118,23 +118,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.mapView.delegate = self
         }
     
-        @IBAction func zoomStepper(_ sender: UIStepper) {
+
             
-               sender.maximumValue = 5
-               sender.minimumValue = -5
                
-               if sender.value < 0{
-                   let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: -0.1, longitudeDelta: -0.1))
-                   self.mapView.setRegion(region, animated: true)
-                
-                   
-               } else if sender.value > 0{
-                   let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: +0.1, longitudeDelta: +0.1))
-                   self.mapView.setRegion(region, animated: true)
-               
-           }
             
-    }
+    
     @IBAction func mode(_ sender: UISegmentedControl) {
         
         if sender.isEnabledForSegment(at: 0){
@@ -143,6 +131,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         else {
             mode = .automobile        }
         
+    }
+    
+    @IBAction func zoomOut(_ sender: UIButton) {
+        
+        let span = MKCoordinateSpan(latitudeDelta: mapView.region.span.latitudeDelta/2, longitudeDelta: mapView.region.span.longitudeDelta/2)
+        let region = MKCoordinateRegion(center: mapView.region.center, span: span)
+        
+        mapView.setRegion(region, animated: true)
+        
+        
+    }
+    
+    @IBAction func zoomIn(_ sender: UIButton) {
+        
+        let span = MKCoordinateSpan(latitudeDelta: mapView.region.span.latitudeDelta*2, longitudeDelta: mapView.region.span.longitudeDelta*2)
+        let region = MKCoordinateRegion(center: mapView.region.center, span: span)
+        
+        mapView.setRegion(region, animated: true)
     }
     
 }
