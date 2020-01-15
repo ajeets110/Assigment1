@@ -12,7 +12,9 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
+    @IBOutlet weak var zoomStppr: UIStepper!
     var locationManager = CLLocationManager()
+    var mode = MKDirectionsTransportType()
     var location = CLLocationCoordinate2D()
     var coordinate = CLLocationCoordinate2D()
     @IBOutlet weak var navigateButton: UIButton!
@@ -54,7 +56,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         uidtgr.numberOfTapsRequired = 2
         mapView.addGestureRecognizer(uidtgr)
         
+        
     }
+    
+   
     
     @objc func doubuleTap(gestureRecognizer: UIGestureRecognizer){
         
@@ -65,10 +70,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         annotation.title = "Destination"
         annotation.coordinate = coordinate
         if mapView.annotations.count == 1 {
+        
             mapView.addAnnotation(annotation)
             
         } else {
-            mapView.removeAnnotation(annotation)
+            
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.addAnnotation(annotation)
         }
         
     }
@@ -76,11 +84,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func navigateBtn(_ sender: Any) {
         
-        directions()
+        self.mapView.removeOverlays(mapView.overlays)
+        directions(mode: mode)
         
     }
     
-    @objc func directions(){
+    
+    @objc func directions(mode : MKDirectionsTransportType){
         
         let sourcePlacemark = MKPlacemark(coordinate: location)
         let destPlacemark = MKPlacemark(coordinate: coordinate)
@@ -88,7 +98,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let directionRequest = MKDirections.Request()
         directionRequest.source = MKMapItem(placemark: sourcePlacemark)
         directionRequest.destination = MKMapItem(placemark: destPlacemark)
-        directionRequest.transportType = .automobile
+        
         
         let direction = MKDirections(request: directionRequest)
         direction.calculate{ (response, error) in
@@ -107,12 +117,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         self.mapView.delegate = self
         }
+    
+        @IBAction func zoomStepper(_ sender: UIStepper) {
+            
+               sender.maximumValue = 5
+               sender.minimumValue = -5
+               
+               if sender.value < 0{
+                   let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: -0.1, longitudeDelta: -0.1))
+                   self.mapView.setRegion(region, animated: true)
+                
+                   
+               } else if sender.value > 0{
+                   let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: +0.1, longitudeDelta: +0.1))
+                   self.mapView.setRegion(region, animated: true)
+               
+           }
+            
+    }
+    @IBAction func mode(_ sender: UISegmentedControl) {
+        
+        if sender.isEnabledForSegment(at: 0){
+            mode = .walking
+        }
+        else {
+            mode = .automobile        }
+        
+    }
+    
 }
-        
-        
-  
-
-
+    
 extension ViewController: MKMapViewDelegate
 {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -123,4 +157,6 @@ extension ViewController: MKMapViewDelegate
         renderer.lineWidth = 3
         return renderer
 }
+    
+
 }
